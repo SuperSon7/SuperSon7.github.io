@@ -3,30 +3,1275 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SuperSon7 Portfolio</title>
+    <title>김정빈 — DevOps &middot; Cloud Engineer</title>
+    <meta name="description" content="DevOps · Cloud Engineer 김정빈의 포트폴리오. Kubernetes, Terraform, Observability, CI/CD.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #111119;
+            --bg-card: #16161f;
+            --bg-card-hover: #1c1c28;
+            --border: #2a2a3a;
+            --text-primary: #e8e8f0;
+            --text-secondary: #9898b0;
+            --text-muted: #6a6a82;
+            --accent: #6c63ff;
+            --accent-light: #8b83ff;
+            --accent-glow: rgba(108, 99, 255, 0.15);
+            --green: #34d399;
+            --green-dim: rgba(52, 211, 153, 0.12);
+            --orange: #fb923c;
+            --orange-dim: rgba(251, 146, 60, 0.12);
+            --blue: #60a5fa;
+            --blue-dim: rgba(96, 165, 250, 0.12);
+            --pink: #f472b6;
+            --pink-dim: rgba(244, 114, 182, 0.12);
+            --red: #f87171;
+            --yellow: #fbbf24;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #0d1117;
-            color: #e6edf3;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Scrollbar ── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+        /* ── Nav ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: transform 0.3s;
+        }
+
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 64px;
             display: flex;
-            justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            justify-content: space-between;
         }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-logo span { color: var(--accent); }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .nav-links a:hover { color: var(--text-primary); }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.2s;
+        }
+
+        .nav-links a:hover::after { width: 100%; }
+
+        /* ── Mobile Nav ── */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* ── Container ── */
         .container {
-            text-align: center;
-            padding: 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
-        h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-        p { color: #8b949e; font-size: 1.2rem; }
+
+        /* ── Hero ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 740px;
+        }
+
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent-light);
+            background: var(--accent-glow);
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            border: 1px solid rgba(108, 99, 255, 0.25);
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .hero-label .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 3.8rem);
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.25rem;
+        }
+
+        .hero h1 .gradient {
+            background: linear-gradient(135deg, var(--accent-light), var(--blue), var(--green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-desc {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        .hero-contact {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-contact a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .hero-contact a:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+            transform: translateY(-1px);
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 0.75rem 1.75rem;
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+
+        .hero-cta:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(108, 99, 255, 0.3);
+        }
+
+        /* ── Sections ── */
+        section {
+            padding: 6rem 0;
+        }
+
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--accent-light);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .section-desc {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            max-width: 640px;
+            margin-bottom: 3rem;
+        }
+
+        /* ── Project Header ── */
+        .project-header {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .project-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .meta-tag {
+            font-size: 0.8rem;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 0.3rem 0.75rem;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        .meta-tag.period { background: var(--blue-dim); color: var(--blue); }
+        .meta-tag.team { background: var(--green-dim); color: var(--green); }
+        .meta-tag.role { background: var(--orange-dim); color: var(--orange); }
+
+        .project-header h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-header p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* ── Achievement Cards ── */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .achievement-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 2rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .achievement-card:hover {
+            border-color: var(--accent);
+            background: var(--bg-card-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .achievement-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--blue));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .achievement-card:hover::before { opacity: 1; }
+
+        .card-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent-light);
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .card-result {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            color: var(--green);
+            background: var(--green-dim);
+            padding: 0.4rem 0.75rem;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .card-body {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.75;
+        }
+
+        .card-body strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* ── Detail Expand ── */
+        .detail-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 1rem;
+            font-size: 0.82rem;
+            color: var(--accent-light);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            padding: 0;
+        }
+
+        .detail-toggle:hover { color: var(--accent); }
+
+        .detail-toggle .arrow {
+            transition: transform 0.2s;
+            font-size: 0.7rem;
+        }
+
+        .detail-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .detail-content.open {
+            max-height: 2000px;
+        }
+
+        .detail-inner {
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            margin-top: 1rem;
+        }
+
+        .detail-inner h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .detail-inner h4:first-child { margin-top: 0; }
+
+        .detail-inner p, .detail-inner li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .detail-inner ul {
+            padding-left: 1.2rem;
+            margin: 0.5rem 0;
+        }
+
+        .detail-inner li { margin-bottom: 0.25rem; }
+
+        /* ── Stats Row ── */
+        .stats-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-item {
+            flex: 1;
+            min-width: 140px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent-light);
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.35rem;
+        }
+
+        /* ── Tech Table ── */
+        .tech-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.88rem;
+        }
+
+        .tech-table th {
+            text-align: left;
+            padding: 0.75rem 1rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tech-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(42, 42, 58, 0.5);
+            vertical-align: top;
+        }
+
+        .tech-table td:first-child {
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            white-space: nowrap;
+            width: 180px;
+        }
+
+        .tech-table td:last-child {
+            color: var(--text-secondary);
+        }
+
+        .tech-table tr:hover td {
+            background: rgba(108, 99, 255, 0.03);
+        }
+
+        /* ── Other Projects ── */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-card .tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 5px;
+            display: inline-block;
+            margin-right: 0.4rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-card .desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-card .results {
+            font-size: 0.85rem;
+        }
+
+        .project-card .results li {
+            color: var(--text-secondary);
+            margin-bottom: 0.3rem;
+        }
+
+        /* ── Education & Awards ── */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 8px;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            transform: translateX(-4px);
+        }
+
+        .timeline-item .period {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-item h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-item p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* ── Tech Stack Cloud ── */
+        .tech-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+
+        .tech-chip {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            padding: 0.4rem 0.9rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+
+        .tech-chip:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+            background: var(--accent-glow);
+        }
+
+        .tech-chip.highlight {
+            border-color: rgba(108, 99, 255, 0.4);
+            background: var(--accent-glow);
+            color: var(--accent-light);
+        }
+
+        /* ── Tech Categories ── */
+        .tech-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .tech-category {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .tech-category h4 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+        }
+
+        /* ── Footer ── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: var(--accent-light);
+            text-decoration: none;
+        }
+
+        /* ── Divider ── */
+        .divider {
+            border: none;
+            height: 1px;
+            background: var(--border);
+            margin: 3rem 0;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .nav-toggle { display: block; }
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 64px;
+                left: 0;
+                right: 0;
+                background: rgba(10, 10, 15, 0.97);
+                padding: 1.5rem 2rem;
+                gap: 1rem;
+                border-bottom: 1px solid var(--border);
+            }
+            section { padding: 4rem 0; }
+            .achievements-grid { grid-template-columns: 1fr; }
+            .stats-row { gap: 0.75rem; }
+            .stat-item { min-width: 100px; padding: 1rem; }
+            .stat-value { font-size: 1.3rem; }
+            .project-header { padding: 1.5rem; }
+            .hero-contact { flex-direction: column; }
+            .tech-table td:first-child { width: auto; }
+        }
+
+        /* ── Animation ── */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>SuperSon7</h1>
-        <p>Portfolio - Coming Soon</p>
+
+<!-- Navigation -->
+<nav>
+    <div class="nav-inner">
+        <a href="#" class="nav-logo">JB<span>.</span>Kim</a>
+        <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle navigation">&#9776;</button>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#doktori">Doktori</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#stack">Tech Stack</a></li>
+            <li><a href="#education">Education</a></li>
+        </ul>
     </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="about">
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-label">
+                <span class="dot"></span>
+                DevOps &middot; Cloud Engineer
+            </div>
+            <h1>
+                안녕하세요,<br>
+                <span class="gradient">김정빈</span>입니다.
+            </h1>
+            <p class="hero-desc">
+                팀이 언제든 자신 있게 배포하고, 장애를 빠르게 감지하고,
+                서비스가 스스로 회복할 수 있도록 &mdash; 그 환경을 설계합니다.
+            </p>
+            <div class="hero-contact">
+                <a href="mailto:vanilab@gmail.com">vanilab@gmail.com</a>
+                <a href="tel:010-2064-9986">010-2064-9986</a>
+                <a href="https://github.com/SuperSon7" target="_blank" rel="noopener">github.com/SuperSon7</a>
+            </div>
+            <a href="#doktori" class="hero-cta">프로젝트 보기 &darr;</a>
+        </div>
+    </div>
+</section>
+
+<!-- Doktori -->
+<section id="doktori">
+    <div class="container">
+        <span class="section-label">Main Project</span>
+        <h2 class="section-title">Doktori</h2>
+        <p class="section-desc">온라인 독서 토론 플랫폼 &mdash; 스타트업 크레딧 한도 제약 하에 MVP &rarr; 실사용자 운영 &rarr; K8s 전환까지 3단계 인프라 전환을 전담 설계&middot;실행</p>
+
+        <div class="project-header fade-in">
+            <div class="project-meta">
+                <span class="meta-tag period">2025.09 ~ 2026.03</span>
+                <span class="meta-tag team">6인 팀 (백2, 프1, 클2, AI1)</span>
+                <span class="meta-tag role">인프라/DevOps 전담</span>
+            </div>
+        </div>
+
+        <!-- Key Stats -->
+        <div class="stats-row fade-in">
+            <div class="stat-item">
+                <div class="stat-value">97.2%</div>
+                <div class="stat-label">DB 다운타임 단축</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">12+</div>
+                <div class="stat-label">Grafana 대시보드</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">28+</div>
+                <div class="stat-label">Alert Rules</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">17</div>
+                <div class="stat-label">Chaos 시나리오</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">21</div>
+                <div class="stat-label">운영 런북</div>
+            </div>
+        </div>
+
+        <!-- Achievement Cards -->
+        <div class="achievements-grid">
+
+            <!-- Card 1: Migration -->
+            <div class="achievement-card fade-in">
+                <div class="card-number">01</div>
+                <div class="card-title">무중단 인프라 마이그레이션</div>
+                <div class="card-result">다운타임 97.22% 단축 &middot; 정상 처리율 99.9965%</div>
+                <div class="card-body">
+                    단일 EC2(앱+DB 동거) &rarr; 앱/DB 분리 전환. <strong>nginx stream proxy</strong>를 앱과 DB 사이에 삽입하여 앱 코드 변경 없이 upstream만 교체. 쓰기 불가 구간 <strong>5초</strong>, 롤백은 nginx reload 한 번.
+                </div>
+                <button class="detail-toggle" onclick="toggleDetail(this)">
+                    자세히 보기 <span class="arrow">&#9660;</span>
+                </button>
+                <div class="detail-content">
+                    <div class="detail-inner">
+                        <h4>설계 판단</h4>
+                        <ul>
+                            <li>DNS TTL 전환 배제 &mdash; 캐시 잔존 시 라우팅 불확실, 즉시 롤백 불가</li>
+                            <li>CDC/DMS/ProxySQL 배제 &mdash; 단일 인스턴스에서 과도한 복잡성과 단일 장애점</li>
+                            <li>nginx stream 선택 &mdash; 가장 낮은 복잡도로 즉시 롤백 가능</li>
+                        </ul>
+                        <h4>실행 순서</h4>
+                        <ul>
+                            <li>nginx stream proxy 삽입 (앱 &rarr; proxy &rarr; 기존 EC2 DB)</li>
+                            <li>EC2 DB super_read_only 활성화</li>
+                            <li>binlog 동기화 확인 (lag = 0)</li>
+                            <li>proxy upstream을 RDS로 교체 (nginx reload)</li>
+                            <li>KILL CONNECTION으로 HikariCP 강제 재연결</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Observability -->
+            <div class="achievement-card fade-in">
+                <div class="card-number">02</div>
+                <div class="card-title">Full Observability Stack</div>
+                <div class="card-result">Pull&rarr;Push 전환 &middot; 인바운드 포트 4&rarr;0개</div>
+                <div class="card-body">
+                    메트릭&middot;로그&middot;알림 단일 스택 구축. <strong>Grafana Alloy</strong>로 4개 프로세스 &rarr; 1개 바이너리 통합. RED/USE 방법론 기반 12+ 대시보드, Loki S3 백엔드 + lifecycle 비용 최적화.
+                </div>
+                <button class="detail-toggle" onclick="toggleDetail(this)">
+                    자세히 보기 <span class="arrow">&#9660;</span>
+                </button>
+                <div class="detail-content">
+                    <div class="detail-inner">
+                        <h4>스택 구성</h4>
+                        <table class="tech-table">
+                            <tr><td>Grafana Alloy</td><td>수집 에이전트 (Push) &mdash; Promtail EOL 대응</td></tr>
+                            <tr><td>Prometheus</td><td>메트릭 저장 &mdash; PromQL 기반 SLI 정의</td></tr>
+                            <tr><td>Loki</td><td>로그 저장 &mdash; ELK 대비 운영 리소스 낮음</td></tr>
+                            <tr><td>Grafana</td><td>시각화 + 알림 &mdash; 메트릭&middot;로그 단일 UI</td></tr>
+                            <tr><td>Blackbox Exporter</td><td>외부 health check &mdash; DB&middot;캐시 상태 확인</td></tr>
+                        </table>
+                        <h4>대시보드 (12+)</h4>
+                        <p>Overview, HTTP RED, JVM, USE(36 패널), MySQL, RabbitMQ, Nginx, Container, Logs, 비용 모니터링 등</p>
+                        <h4>네트워크</h4>
+                        <p>VPC Peering + Private Hosted Zone &mdash; 모니터링 인프라 별도 VPC 격리</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: SLO -->
+            <div class="achievement-card fade-in">
+                <div class="card-number">03</div>
+                <div class="card-title">SLO / Error Budget &mdash; Google SRE 방법론</div>
+                <div class="card-result">SLO 4개 정의 &middot; 이론 vs 실환경 한계 발견&middot;해결</div>
+                <div class="card-body">
+                    단순 threshold가 아닌 <strong>Error Budget Burn Rate</strong> 방식 운영. 저트래픽 서비스에서 burn rate 오탐을 발견하고 <strong>Probe-based SLI</strong>로 전환한 판단 경험.
+                </div>
+                <button class="detail-toggle" onclick="toggleDetail(this)">
+                    자세히 보기 <span class="arrow">&#9660;</span>
+                </button>
+                <div class="detail-content">
+                    <div class="detail-inner">
+                        <h4>정의한 SLO</h4>
+                        <table class="tech-table">
+                            <tr><td>API Error Budget</td><td>99.5% (월 에러 버짓 216분) &mdash; Request-based</td></tr>
+                            <tr><td>API P95 Latency</td><td>&lt; 1,000ms &mdash; 부하테스트 기반 v1(500ms)&rarr;v2 조정</td></tr>
+                            <tr><td>Chat Service</td><td>99.0% &mdash; Probe-based (Blackbox Exporter)</td></tr>
+                            <tr><td>Participation API</td><td>99.0% &mdash; Request-based Ratio</td></tr>
+                        </table>
+                        <h4>실환경 발견</h4>
+                        <ul>
+                            <li>저트래픽 서비스에 Burn Rate 적용 시 1건 에러 = 극단적 수치 &rarr; false alert 남발</li>
+                            <li>SLO-3 probe 기반 정의했으나 실제 Blackbox가 probe하지 않는 상태 발견 &rarr; /chat-health 엔드포인트 추가</li>
+                            <li>부하테스트 threshold가 SLO v1 기준에 머물러 있는 것 발견 &rarr; 13개 스크립트 일괄 정렬</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4: Alert -->
+            <div class="achievement-card fade-in">
+                <div class="card-number">04</div>
+                <div class="card-title">Alert 신뢰성 엔지니어링</div>
+                <div class="card-result">오탐 10건+ 분석&middot;제거 &middot; 28+ Alert Rules</div>
+                <div class="card-body">
+                    4-tier severity(P1~P4), 3-layer 방어(pending + keep_firing_for + notification policy), Watchdog 패턴. <strong>"알림이 오면 반드시 대응이 필요하다"</strong>는 신뢰도 확보.
+                </div>
+                <button class="detail-toggle" onclick="toggleDetail(this)">
+                    자세히 보기 <span class="arrow">&#9660;</span>
+                </button>
+                <div class="detail-content">
+                    <div class="detail-inner">
+                        <h4>대표 오탐 사례</h4>
+                        <table class="tech-table">
+                            <tr><td>Blue/Green 비활성</td><td>비활성 슬롯 up=0 &rarr; max by(app,env) 집계로 해결</td></tr>
+                            <tr><td>env 필터 누락</td><td>dev가 prod 알림 발동 &rarr; 12개 룰에 env="prod" 추가</td></tr>
+                            <tr><td>cAdvisor 오탐</td><td>floating point 정밀도 &rarr; 앱 서비스만 필터</td></tr>
+                            <tr><td>flapping</td><td>메모리 89%&harr;91% 진동 &rarr; keep_firing_for: 10m</td></tr>
+                            <tr><td>cascading alert</td><td>서버 1대 다운 &rarr; 5개 동시 &rarr; 종속성 필터</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 5: Blue/Green -->
+            <div class="achievement-card fade-in">
+                <div class="card-number">05</div>
+                <div class="card-title">Blue/Green 배포 &times; 모니터링 통합</div>
+                <div class="card-result">라벨 표준 7개 정의 &middot; K8s 대시보드 재사용 100%</div>
+                <div class="card-body">
+                    배포 전략과 모니터링이 충돌하는 지점을 발견&middot;해결. Docker &rarr; K8s 전환 시 <strong>relabel 규칙 40개+</strong>로 라벨 통일, 대시보드 재작성 없이 전환.
+                </div>
+                <button class="detail-toggle" onclick="toggleDetail(this)">
+                    자세히 보기 <span class="arrow">&#9660;</span>
+                </button>
+                <div class="detail-content">
+                    <div class="detail-inner">
+                        <h4>충돌 사례</h4>
+                        <ul>
+                            <li><strong>메트릭 전체 유실</strong> &mdash; docker compose up -d 재생성 &rarr; Prometheus OOO 거부 &rarr; OOO ingestion 1h window 활성화</li>
+                            <li><strong>Chat 서버 up=0</strong> &mdash; APP_PORT가 blue(8081) 고정 &rarr; 양쪽 포트 scrape 타겟 등록</li>
+                            <li><strong>Loki 라벨 불일치</strong> &mdash; dev/prod 이름 상이 &rarr; relabel로 app=api 통일</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 6: Terraform -->
+            <div class="achievement-card fade-in">
+                <div class="card-number">06</div>
+                <div class="card-title">IaC &mdash; Terraform 3-Layer</div>
+                <div class="card-result">blast radius 레이어 단위 제한 &middot; OIDC 인증</div>
+                <div class="card-body">
+                    base(VPC) &rarr; app(EC2, ALB) &rarr; data(RDS, Cache) 3계층 분리. terraform_remote_state로 레이어 간 참조. <strong>PR: plan 자동 + Infracost</strong>, Merge: apply 자동.
+                </div>
+                <button class="detail-toggle" onclick="toggleDetail(this)">
+                    자세히 보기 <span class="arrow">&#9660;</span>
+                </button>
+                <div class="detail-content">
+                    <div class="detail-inner">
+                        <h4>구조</h4>
+                        <ul>
+                            <li><strong>base</strong> &mdash; VPC, Subnet, IGW, Security Group</li>
+                            <li><strong>app</strong> &mdash; EC2, ALB, AutoScaling, ECS</li>
+                            <li><strong>data</strong> &mdash; RDS, ElastiCache, S3</li>
+                            <li><strong>독립</strong> &mdash; global(IAM), ecr, monitoring, dns-zone</li>
+                        </ul>
+                        <h4>재사용 모듈</h4>
+                        <p>compute / database / networking / storage / k8s-cluster</p>
+                        <p>S3 + DynamoDB 백엔드 (state locking, 환경별 key 분리)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 7: ArgoCD -->
+            <div class="achievement-card fade-in">
+                <div class="card-number">07</div>
+                <div class="card-title">GitOps &mdash; ArgoCD</div>
+                <div class="card-result">kubectl apply 직접 실행 금지 &middot; Git = Single Source of Truth</div>
+                <div class="card-body">
+                    4개 Application(workloads, monitoring, security, hpa) 카테고리별 독립 sync. <strong>auto-sync + selfHeal + prune</strong> 활성화, ApplyOutOfSyncOnly로 불필요한 재시작 방지.
+                </div>
+            </div>
+
+            <!-- Card 8: Chaos -->
+            <div class="achievement-card fade-in">
+                <div class="card-number">08</div>
+                <div class="card-title">Chaos Engineering &mdash; 17개 시나리오</div>
+                <div class="card-result">Chaos Mesh 기반 &middot; SLO 연계 검증</div>
+                <div class="card-body">
+                    워크로드(pod kill, latency, CPU stress), 시스템(cascading failure, AZ 장애, 30분 Game Day), 인프라 컴포넌트(monitoring/DNS/CNI 장애) 3개 레벨로 분류. SLO 위반 여부 확인.
+                </div>
+            </div>
+
+            <!-- Card 9: K8s -->
+            <div class="achievement-card fade-in">
+                <div class="card-number">09</div>
+                <div class="card-title">Self-managed K8s 클러스터</div>
+                <div class="card-result">kubeadm Master 3노드 HA &middot; Ansible + Packer 자동화</div>
+                <div class="card-body">
+                    EKS가 숨기는 컨트롤 플레인을 직접 운영. etcd encryption at rest, NetworkPolicy default-deny, CIS Benchmark 적용. <strong>"K8s 내부가 어떻게 동작하는가"에 대한 답변 가능.</strong>
+                </div>
+            </div>
+
+            <!-- Card 10: K8s Workload -->
+            <div class="achievement-card fade-in">
+                <div class="card-number">10</div>
+                <div class="card-title">K8s 프로덕션 워크로드 설정</div>
+                <div class="card-result">각 설정에 명확한 의도 &middot; Java GC 최적화 포함</div>
+                <div class="card-body">
+                    Probes 3종, HPA(비대칭 up/down), PDB, preStop hook, SecurityContext, topologySpread, PriorityClass. <strong>CPU limit 미설정(의도적)</strong> &mdash; Java GC 쓰로틀링 방지.
+                </div>
+            </div>
+
+            <!-- Card 11: Data HA -->
+            <div class="achievement-card fade-in">
+                <div class="card-number">11</div>
+                <div class="card-title">Data HA &mdash; Redis Sentinel + RabbitMQ Quorum</div>
+                <div class="card-result">split-brain 방지 &middot; failover 5~15초</div>
+                <div class="card-body">
+                    Redis Sentinel 3노드(AZ 분산, min-replicas-to-write=1), RabbitMQ Quorum Queue(Raft, pause_minority). Terraform 모듈 + Private Hosted Zone 서비스 디스커버리.
+                </div>
+            </div>
+
+            <!-- Card 12: Runbooks -->
+            <div class="achievement-card fade-in">
+                <div class="card-number">12</div>
+                <div class="card-title">운영 런북 체계 (21개)</div>
+                <div class="card-result">온콜 인수인계 가능한 수준의 문서화</div>
+                <div class="card-body">
+                    Alerting 8개, Deployment 3개, Operations 6개, Compute 1개, Security 1개 등 카테고리별 1-2-3 대응 절차. <strong>"코드만 짜는 게 아니라 운영 문서화" &mdash; SRE 마인드셋.</strong>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<hr class="divider container">
+
+<!-- Other Projects -->
+<section id="projects">
+    <div class="container">
+        <span class="section-label">Other Projects</span>
+        <h2 class="section-title">다른 프로젝트</h2>
+
+        <div class="projects-grid">
+            <div class="project-card fade-in">
+                <span class="tag" style="background:var(--blue-dim);color:var(--blue);">2025.12</span>
+                <span class="tag" style="background:var(--green-dim);color:var(--green);">5인 팀</span>
+                <span class="tag" style="background:var(--orange-dim);color:var(--orange);">본선 진출</span>
+                <h3>부하테스트 대회 &mdash; 다자간 채팅</h3>
+                <p class="desc">동시접속 증가 시 채팅&middot;DB 병목으로 p95 지연&middot;오류율 발생. 병목 분리 + 튜닝으로 해결.</p>
+                <ul class="results">
+                    <li>채팅 서버 역할 분리 &rarr; 병목 해소</li>
+                    <li>DB 쿼리 최적화 + Redis 캐싱</li>
+                    <li>정적 리소스 S3 + CloudFront 분리</li>
+                    <li><strong style="color:var(--green);">동시접속 400+ 달성</strong></li>
+                </ul>
+            </div>
+
+            <div class="project-card fade-in">
+                <span class="tag" style="background:var(--blue-dim);color:var(--blue);">2025.10~12</span>
+                <span class="tag" style="background:var(--pink-dim);color:var(--pink);">1인 프로젝트</span>
+                <h3>밥상머리 &mdash; 레시피 커뮤니티</h3>
+                <p class="desc">100만 MAU 가정, 설계 &rarr; 개발 &rarr; 배포 전과정 단독 수행.</p>
+                <ul class="results">
+                    <li>AWS: ASG, API Gateway, Lambda, ElastiCache</li>
+                    <li>GitHub Actions CI/CD 구축</li>
+                    <li><strong style="color:var(--text-secondary);">오버엔지니어링 경험이 이후 적정 기술 판단의 기준이 됨</strong></li>
+                </ul>
+            </div>
+
+            <div class="project-card fade-in">
+                <span class="tag" style="background:var(--blue-dim);color:var(--blue);">2024.06~10</span>
+                <span class="tag" style="background:var(--green-dim);color:var(--green);">3인 팀</span>
+                <h3>VoiceMeSing &mdash; AI 커버곡 생성</h3>
+                <p class="desc">RVC 모델을 이용한 커버곡 생성 서비스. AI 파트 모델&middot;서빙 담당.</p>
+                <ul class="results">
+                    <li>10분 내 생성(SLO) 충족 위해 서빙 성능 검증</li>
+                    <li>16GB VRAM 필요 확인</li>
+                    <li>클라우드 GPU 비용 제약 &rarr; 로컬 서빙 아키텍처 전환</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr class="divider container">
+
+<!-- Tech Stack -->
+<section id="stack">
+    <div class="container">
+        <span class="section-label">Tech Stack</span>
+        <h2 class="section-title">기술 스택</h2>
+
+        <div class="tech-categories fade-in">
+            <div class="tech-category">
+                <h4>Container / Orchestration</h4>
+                <div class="tech-cloud">
+                    <span class="tech-chip highlight">Kubernetes</span>
+                    <span class="tech-chip">kubeadm</span>
+                    <span class="tech-chip">Docker</span>
+                    <span class="tech-chip">Helm</span>
+                </div>
+            </div>
+            <div class="tech-category">
+                <h4>IaC / Automation</h4>
+                <div class="tech-cloud">
+                    <span class="tech-chip highlight">Terraform</span>
+                    <span class="tech-chip">Ansible</span>
+                    <span class="tech-chip">Packer</span>
+                </div>
+            </div>
+            <div class="tech-category">
+                <h4>GitOps / CI/CD</h4>
+                <div class="tech-cloud">
+                    <span class="tech-chip highlight">ArgoCD</span>
+                    <span class="tech-chip">GitHub Actions</span>
+                    <span class="tech-chip">OIDC</span>
+                </div>
+            </div>
+            <div class="tech-category">
+                <h4>Observability</h4>
+                <div class="tech-cloud">
+                    <span class="tech-chip highlight">Prometheus</span>
+                    <span class="tech-chip highlight">Grafana</span>
+                    <span class="tech-chip">Loki</span>
+                    <span class="tech-chip">Grafana Alloy</span>
+                    <span class="tech-chip">Blackbox Exporter</span>
+                    <span class="tech-chip">Chaos Mesh</span>
+                </div>
+            </div>
+            <div class="tech-category">
+                <h4>Cloud (AWS)</h4>
+                <div class="tech-cloud">
+                    <span class="tech-chip">EC2</span>
+                    <span class="tech-chip">RDS</span>
+                    <span class="tech-chip">S3</span>
+                    <span class="tech-chip">CloudFront</span>
+                    <span class="tech-chip">Route53</span>
+                    <span class="tech-chip">IAM</span>
+                    <span class="tech-chip">VPC</span>
+                    <span class="tech-chip">ASG</span>
+                    <span class="tech-chip">ALB</span>
+                </div>
+            </div>
+            <div class="tech-category">
+                <h4>Data / Messaging</h4>
+                <div class="tech-cloud">
+                    <span class="tech-chip">MySQL</span>
+                    <span class="tech-chip highlight">Redis Sentinel</span>
+                    <span class="tech-chip highlight">RabbitMQ Quorum</span>
+                    <span class="tech-chip">K6</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr class="divider container">
+
+<!-- Education & Awards -->
+<section id="education">
+    <div class="container">
+        <span class="section-label">Education &amp; Awards</span>
+        <h2 class="section-title">교육 &amp; 수상</h2>
+
+        <div class="timeline fade-in">
+            <div class="timeline-item">
+                <div class="period">2025.09 ~ 2026.03</div>
+                <h3>카카오테크 부트캠프</h3>
+                <p>Cloud 과정</p>
+            </div>
+            <div class="timeline-item">
+                <div class="period">2019 ~ 2026.02</div>
+                <h3>홍익대학교 컴퓨터공학과</h3>
+            </div>
+            <div class="timeline-item">
+                <div class="period">2025</div>
+                <h3>당뇨병 구독제 Kit 아이디어톤 대상</h3>
+                <p>홍익대학교</p>
+            </div>
+            <div class="timeline-item">
+                <div class="period">2025</div>
+                <h3>AI 회고록 작성 서비스 교내 경진대회 본선</h3>
+                <p>홍익대학교</p>
+            </div>
+            <div class="timeline-item">
+                <div class="period">2025</div>
+                <h3>회전 압착식 재활용 캔 디자인 엔지니어링 대회 수상</h3>
+                <p>공학교육혁신센터</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <p>&copy; 2026 김정빈 &mdash; <a href="https://github.com/SuperSon7" target="_blank" rel="noopener">GitHub</a></p>
+    </div>
+</footer>
+
+<script>
+    // Toggle detail sections
+    function toggleDetail(btn) {
+        const content = btn.nextElementSibling;
+        const arrow = btn.querySelector('.arrow');
+        content.classList.toggle('open');
+        arrow.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : '';
+    }
+
+    // Scroll fade-in
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Nav hide on scroll down
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+        const nav = document.querySelector('nav');
+        const currentScroll = window.pageYOffset;
+        if (currentScroll > lastScroll && currentScroll > 200) {
+            nav.style.transform = 'translateY(-100%)';
+        } else {
+            nav.style.transform = 'translateY(0)';
+        }
+        lastScroll = currentScroll;
+    });
+</script>
+
 </body>
 </html>
